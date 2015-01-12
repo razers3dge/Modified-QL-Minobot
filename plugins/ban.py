@@ -260,6 +260,7 @@ class ban(minqlbot.Plugin):
             pro = qlprofile.get_profile(name)
             if not pro.is_eligible(days):
                 self.debug("{} WAS KICKED FOR BEING AN ACCOUNT CREATED IN THE LAST {} DAYS.".format(name, days))
+                channel.reply("^2{} ^7WAS KICKED FOR BEING AN ACCOUNT CREATED IN THE LAST ^2{} ^7DAYS.".format(name, days))
                 self.kickban(name)
         except:
             e = traceback.format_exc().rstrip("\n")
