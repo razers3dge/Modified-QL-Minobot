@@ -267,6 +267,26 @@ class ban(minqlbot.Plugin):
             debug("========== ERROR: {}@get_profile_thread ==========".format(self.__class__.__name__))
             for line in e.split("\n"):
                 debug(line)
+                
+        #Update database with created on date from QL Profile
+
+        #Date and time player connected
+        now = datetime.datetime.now().strftime(self.time_format)
+
+        #Querey database for player
+        c = self.db_query("SELECT * FROM Players WHERE name=?", name)
+        row = c.fetchone()
+
+        playercreatedon = pro.created            
+        
+        if row and not row["created"]:
+	    #update player created record
+            self.db_query("UPDATE Players SET created=? WHERE name=?", playercreatedon, name)
+            self.db_commit()
+        elif not row:
+	    #Create entry for player
+            self.db_query("INSERT INTO Players VALUES(?, 0, ?, 0, 0, 0, ?, 0, 0, 0)", name, now, playercreatedon)
+            self.db_commit()        
 
     def is_leaver_banning(self):
         config = minqlbot.get_config()
