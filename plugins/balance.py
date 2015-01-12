@@ -450,6 +450,9 @@ class balance(minqlbot.Plugin):
                 else:
                     self.kickban(name)
                     self.debug(name + " was kicked for not being within the rating requirements.")
+                    channel.reply("^2{}^7 was kicked for having a rating of ^2{}^7."
+                        .format(name, self.cache[name][game_type]["elo"])
+
 
     def individual_rating(self, name, channel, game_type):
         not_cached = self.not_cached(game_type, (name,))
